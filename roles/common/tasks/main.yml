@@ -1,0 +1,57 @@
+---
+- name: System Upgrade
+  yum: name=* state=latest
+
+- name: Install EPEL
+  yum: name=epel-release state=installed
+
+
+- name: Install REMI Repo
+  yum: name=https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
+- name: Install Common Software
+  yum: name={{ item }} state=installed
+  with_items:
+   - yum-utils
+   - wget  
+   - openssl  
+   - unzip  
+   - bzip2  
+   - expect  
+   - at 
+   - vim 
+   - screen 
+   - git 
+   - htop 
+   - yum-cron
+   - ImageMagick 
+   - goaccess  
+   - MySQL-python
+   - python-pip
+
+- name: Configuration yum-cron
+  copy: src=yum-cron.conf dest=/etc/yum/
+
+- name: Start yum-cron
+  service: name=yum-cron state=started enabled=yes
+
+- name: Create swap Space
+  command: dd if=/dev/zero of=/mnt/swap bs=256M count=8
+
+- name: Make swap
+  command: mkswap /mnt/swap
+
+- name: Action swap
+  command: swapon /mnt/swap
+
+- name: Set swapiness
+  sysctl:
+    name: vm.swappiness
+    value: "10"
+
+- name: Add to fstab
+  lineinfile:
+      dest: /etc/fstab
+      regexp: '/mnt/swap'
+      line: "/mnt/swap swap swap defaults 0 0"
+      state: present

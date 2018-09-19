@@ -1,0 +1,27 @@
+---
+- name: Install Nginx
+  yum: name=nginx state=latest
+
+- name: Create WebSite directory
+  file: 
+      path: /data/wwwroot/www.example.com
+      state: directory
+      owner: nginx
+      group: nginx
+
+- name: Create cert directory
+  file: 
+      path: /data/cert
+      state: directory
+
+- name: Copy Nginx Configuration 
+  copy: src=nginx.conf dest=/etc/nginx
+  notify: restart nginx
+
+- name: Copy Nginx PHP support Configuration 
+  copy: src=php.conf dest=/etc/nginx
+  notify: restart nginx
+
+- name: Copy Nginx other Configuration I
+  copy: src=conf.d dest=/etc/nginx
+  notify: restart nginx

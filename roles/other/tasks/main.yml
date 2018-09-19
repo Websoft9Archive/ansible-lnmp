@@ -1,0 +1,25 @@
+---
+
+- name: Create Script Dir
+  file:
+    path: /usr/local/websoft9
+    state: directory
+
+- name: Install module
+  pip:
+    name: pyinotify
+
+- name: Copy Script
+  copy:
+    src: main.py
+    dest: /usr/local/websoft9
+    mode: 0770
+
+- name: Configuration Service
+  template:
+    src: auto_chown.service
+    dest: /etc/systemd/system
+
+
+- name: started service
+  service: name=auto_chown state=started enabled=yes

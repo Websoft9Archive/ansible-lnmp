@@ -1,0 +1,75 @@
+---
+
+- name: Install MySQL official Repo
+  yum: name=https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm state=latest
+
+- name: Disable Defaule Version
+  command: yum-config-manager --disable mysql57-community
+
+- name: Enable MySQL{{ mysqlver }} version
+  command: yum-config-manager --enable mysql{{ mysqlver }}-community
+
+- name: Install MySQL{{ mysqlver }}
+  yum: name=mysql-community-server state=latest
+
+- name: Create Databases Directory
+  file:
+    path: /data/mysql
+    state: directory
+    owner: mysql
+    group: mysql
+
+- name: Copy MySQL{{ mysqlver }} Configuration
+  template: src=my.cnf dest=/etc/my.cnf
+  notify: restart MySQL
+
+- name: Start MySQL{{ mysqlver }} Service
+  service: name=mysqld state=started enabled=yes
+
+ 
+- name: Get temporary MySQL57+ root password
+  shell: grep 'A temporary password is generated for root@localhost:' /var/log/messages | awk '{print $NF}'
+  register: mysql_root_temp_password
+  when: mysqlver == 57
+
+
+- name: Set MySQL57+ Password policy 
+  command: mysql -uroot --password="{{ mysql_root_temp_password.stdout }}" --connect-expired-password -e "set global validate_password_policy=0;set global validate_password_length=4;"
+  when: mysqlver == 57
+
+- name: Change MySQL57+ root user password 
+  shell: mysqladmin -u root --password="{{ mysql_root_temp_password.stdout }}" password "123456"
+  when: mysqlver == 57
+
+- name: Change MySQL{{ mysqlver }} root user password 
+  mysql_user: name=root host={{ item }} password=123456
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+  when: mysqlver == 55 or mysqlver == 56
+
+- name: Removes all anonymous user accounts
+  mysql_user:
+    login_user: root
+    login_password: 123456
+    name: ''
+    host_all: yes
+    state: absent
+
+- name: Remove hostname user accounts
+  mysql_user: login_user=root login_password=123456 name='root' host={{ ansible_hostname }} state=absent
+
+- name: Removes test Databases
+  mysql_db:
+    login_user: root
+    login_password: 123456
+    name: test
+    state: absent
+
+- name: Removing privileges on test database
+  command: mysql -uroot -p123456 -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
+
+- name: FLUSH PRIVILEGES
+  command: mysql -uroot -p123456 -e "FLUSH PRIVILEGES"
+

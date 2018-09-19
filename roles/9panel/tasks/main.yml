@@ -1,0 +1,34 @@
+---
+
+- name: Create apps directory
+  file: 
+      path: /data/apps
+      state: directory
+      owner: nginx
+      group: nginx
+
+- name: Download 9panel
+  git:
+    repo: https://github.com/Websoft9/9panel.git
+    dest: /data/apps/9panel
+
+- name: Enable 9panel I
+  lineinfile:
+    path: /data/apps/9panel/js/websoft9.js
+    regexp: '"name":"LNMP","switch":0,'
+    line: '"name":"LNMP","switch":1,'
+
+- name: Download Jump Page
+  get_url: url={{ item }} dest=/data/wwwroot/www.example.com
+  with_items:
+    - http://libs-websoft9-com.oss-cn-qingdao.aliyuncs.com/Websoft9/9panel/9panel-php%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83/default%E8%B7%B3%E8%BD%AC/index.html
+    - http://libs-websoft9-com.oss-cn-qingdao.aliyuncs.com/Websoft9/9panel/9panel-php%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83/default%E8%B7%B3%E8%BD%AC/此index页面可以删除.txt
+
+
+- name: Change apps directory Own
+  file: 
+      path: /data/apps
+      owner: nginx
+      group: nginx
+      recurse: yes
+  notify: restart nginx
