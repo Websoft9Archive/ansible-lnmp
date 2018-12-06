@@ -9,6 +9,7 @@
 - name: Enable MySQL{{ mysqlver }} version
   command: yum-config-manager --enable mysql{{ mysqlver }}-community
 
+
 - name: Install MySQL{{ mysqlver }}
   yum: name=mysql-community-server state=latest
 
@@ -19,57 +20,79 @@
     owner: mysql
     group: mysql
 
-- name: Copy MySQL{{ mysqlver }} Configuration
+- name: Get MySQL Version
+  command: mysql -V
+  register: mysql_version
+  
+
+- name: Copy MySQL{{mysqlver}} Configuration
   template: src=my.cnf dest=/etc/my.cnf
   notify: restart MySQL
 
-- name: Start MySQL{{ mysqlver }} Service
-  service: name=mysqld state=started enabled=yes
 
+
+- name: Start MySQL{{mysqlver}} Service
+  service: name=mysqld state=started enabled=yes
+  
  
 - name: Get temporary MySQL57+ root password
   shell: grep 'A temporary password is generated for root@localhost:' /var/log/messages | awk '{print $NF}'
   register: mysql_root_temp_password
-  when: mysqlver == 57
+  when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
 
 
 - name: Set MySQL57+ Password policy 
   command: mysql -uroot --password="{{ mysql_root_temp_password.stdout }}" --connect-expired-password -e "set global validate_password_policy=0;set global validate_password_length=4;"
-  when: mysqlver == 57
+  when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
 
 - name: Change MySQL57+ root user password 
-  shell: mysqladmin -u root --password="{{ mysql_root_temp_password.stdout }}" password "123456"
-  when: mysqlver == 57
+  shell: mysqladmin -u root --password="{{ mysql_root_temp_password.stdout }}" password "{{mysql_password}}"
+  when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
+
 
 - name: Change MySQL{{ mysqlver }} root user password 
-  mysql_user: name=root host={{ item }} password=123456
+  mysql_user: 
+    name: root 
+    host: "{{ item }}" 
+    password: "{{mysql_password}}"
   with_items:
     - 127.0.0.1
     - ::1
     - localhost
-  when: mysqlver == 55 or mysqlver == 56
+  when: (mysql_version.stdout.find('5.5') != -1) or (mysql_version.stdout.find('5.6') != -1)
 
-- name: Removes all anonymous user accounts
+
+- name: Removes all anyelse user accounts
   mysql_user:
     login_user: root
-    login_password: 123456
+    login_password: "{{mysql_password}}"
     name: ''
     host_all: yes
     state: absent
 
 - name: Remove hostname user accounts
-  mysql_user: login_user=root login_password=123456 name='root' host={{ ansible_hostname }} state=absent
+  mysql_user: login_user=root login_password={{mysql_password}} name='root' host={{ ansible_fqdn }} state=absent
+
 
 - name: Removes test Databases
   mysql_db:
     login_user: root
-    login_password: 123456
+    login_password: "{{mysql_password}}"
     name: test
     state: absent
 
 - name: Removing privileges on test database
-  command: mysql -uroot -p123456 -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
+  command: mysql -uroot -p{{mysql_password}} -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'"
 
 - name: FLUSH PRIVILEGES
-  command: mysql -uroot -p123456 -e "FLUSH PRIVILEGES"
+  command: mysql -uroot -p{{mysql_password}} -e "FLUSH PRIVILEGES"
 
+
+- name: enable remote access
+  mysql_user: 
+    login_user: root 
+    login_password: "{{mysql_password}}"
+    name: root
+    host: '%'
+    password: "{{mysql_password}}"
+  when: remote 

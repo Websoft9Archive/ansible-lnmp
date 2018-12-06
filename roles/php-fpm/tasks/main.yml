@@ -5,67 +5,12 @@
 
 - name: Install PHP{{ phpver }}
   yum: name={{ item }} state=present
-  with_items: 
-   - php-fpm 
-   - php-pecl-imagick
-   - php-mysql 
-   - php-common 
-   - php-gd 
-   - php-mbstring 
-   - php-mcrypt 
-   - php-devel 
-   - php-xml 
-   - php-pdo 
-   - php-bcmath
-   - php-pear 
-   - php-opcache 
-   - php-ldap 
-   - php-odbc 
-   - php-xmlrpc 
-   - php-json 
-   - php-mysqlnd 
-   - php-pdo 
-   - php-pdo_dblib  
-   - php-recode  
-   - php-snmp 
-   - php-soap 
-   - php-pecl-zip 
-   - php-curl
-   - php-imap
-   - php-pear-Net-SMTP
-   - php-pear-Mail
+  with_items: [php-fpm,php-pecl-imagick,php-mysql,php-common,php-gd,php-mbstring,php-mcrypt,php-devel,php-xml,php-pdo,php-bcmath,php-pear,php-opcache,php-ldap,php-odbc,php-xmlrpc,php-json,php-mysqlnd,php-pdo,php-pdo_dblib ,php-recode,php-snmp,php-soap,php-pecl-zip,php-curl,php-imap,php-pear-Net-SMTP,php-pear-Mail]
   when: phpver != 54
 
 - name: Install PHP54
   yum: name={{ item }} state=present
-  with_items:  
-   - php-fpm
-   - php-pecl-imagick
-   - php-mysql 
-   - php-common 
-   - php-gd 
-   - php-mbstring 
-   - php-mcrypt 
-   - php-devel 
-   - php-xml 
-   - php-pdo 
-   - php-bcmath
-   - php-pear 
-   - php-opcache 
-   - php-ldap 
-   - php-odbc 
-   - php-xmlrpc 
-   - php-json 
-   - php-pdo 
-   - php-pdo_dblib  
-   - php-recode  
-   - php-snmp 
-   - php-soap 
-   - php-pecl-zip 
-   - php-curl
-   - php-imap
-   - php-pear-Net-SMTP
-   - php-pear-Mail
+  with_items:  [php-fpm,php-pecl-imagick,php-mysql,php-common,php-gd,php-mbstring,php-mcrypt,php-devel,php-xml,php-pdo,php-bcmath,php-pear,php-opcache,php-ldap,php-odbc,php-xmlrpc,php-json,php-pdo,php-pdo_dblib,php-recode,php-snmp,php-soap,php-pecl-zip,php-curl,php-imap,php-pear-Net-SMTP,php-pear-Mail]
   when: phpver == 54
 
 

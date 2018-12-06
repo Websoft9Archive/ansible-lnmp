@@ -7,27 +7,19 @@
 
 
 - name: Install REMI Repo
-  yum: name=https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+  yum: name=https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-7.rpm
+
+# - name: add dns for baiducloud
+#   shell: echo "nameserver 8.8.8.8" >>/etc/resolv.conf
+
+# - name: restart networdk
+#   service: name=network state=restarted
 
 - name: Install Common Software
-  yum: name={{ item }} state=installed
-  with_items:
-   - yum-utils
-   - wget  
-   - openssl  
-   - unzip  
-   - bzip2  
-   - expect  
-   - at 
-   - vim 
-   - screen 
-   - git 
-   - htop 
-   - yum-cron
-   - ImageMagick 
-   - goaccess  
-   - MySQL-python
-   - python-pip
+  yum: 
+    name: [yum-utils,wget,openssl,unzip,bzip2,expect,at,vim, screen, git, htop, yum-cron,ImageMagick, goaccess,MySQL-python,python-pip]
+    state: installed
+  
 
 - name: Configuration yum-cron
   copy: src=yum-cron.conf dest=/etc/yum/
@@ -37,13 +29,16 @@
 
 - name: Create swap Space
   command: dd if=/dev/zero of=/mnt/swap bs=256M count=8
+  when: ansible_swaptotal_mb == 0
 
 - name: Make swap
   command: mkswap /mnt/swap
+  when: ansible_swaptotal_mb == 0
 
 - name: Action swap
   command: swapon /mnt/swap
-
+  when: ansible_swaptotal_mb == 0
+  
 - name: Set swapiness
   sysctl:
     name: vm.swappiness
