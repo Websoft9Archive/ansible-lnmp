@@ -95,4 +95,5 @@
     name: root
     host: '%'
     password: "{{mysql_password}}"
+    priv: '*.*:ALL'
   when: remote 
