@@ -10,8 +10,7 @@
 - name: Download 9panel
   git:
     repo: https://github.com/Websoft9/9panel.git
-    dest: /data/apps/9panel
-
+    dest: /data/apps/
 - name: Enable 9panel I
   lineinfile:
     path: /data/apps/9panel/js/websoft9.js
