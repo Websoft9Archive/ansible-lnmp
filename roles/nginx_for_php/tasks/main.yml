@@ -25,3 +25,7 @@
 - name: Copy Nginx other Configuration I
   copy: src=conf.d dest=/etc/nginx
   notify: restart nginx
+
+# - name: Install Certob
+#   yum: 
+#     name: ['certbot',python2-certbot-nginx]
