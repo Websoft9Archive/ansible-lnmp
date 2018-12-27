@@ -71,7 +71,7 @@
     state: absent
 
 - name: Remove hostname user accounts
-  mysql_user: login_user=root login_password={{mysql_password}} name='root' host={{ ansible_fqdn }} state=absent
+  mysql_user: login_user=root login_password={{mysql_password}} name='root' host={{ ansible_nodename }} state=absent
 
 
 - name: Removes test Databases
