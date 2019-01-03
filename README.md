@@ -11,3 +11,4 @@ mysqlver: 56
 phpver: 70
 
 ## 其他事项
+安装Certbot时 可能会报错 忽略即可 加入了错误处理
