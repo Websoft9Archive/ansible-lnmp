@@ -2,8 +2,8 @@
 
 - name: Add Nginx repository
   file:
-    src: nginx.repo
-    dest: /etc/yum.repos.d/nginx.repo
+    template: nginx.repo
+    dest: /etc/yum.repos.d/
     owner: root
     group: root
     mode: 0755
