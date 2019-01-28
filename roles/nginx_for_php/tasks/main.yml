@@ -3,10 +3,10 @@
 - name: Add Nginx repository
   template:
     src: nginx.repo
-    dest: /etc/yum.repos.d/nginx.repo
+    dest: /etc/yum.repos.d/
     owner: root
     group: root
-    mode: 0755
+    mode: 0644
 
 - name: update
   yum: 
