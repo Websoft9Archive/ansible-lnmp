@@ -15,6 +15,10 @@
     state: present
   when: phpver == 54
 
+- name: Install composer
+  yum: 
+    name: composer
+    state: latest
 
 - name: Copy PHP Configuration 
   template: src=php.ini dest=/etc/
