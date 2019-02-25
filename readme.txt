@@ -19,7 +19,7 @@ Platform. It combines leading open source projects, such as PHP,MYSQL,phpMyAdmin
 Websoft9 IIS stack ships with the following software versions:
 
 ********
-— php 7.3.33
+— php 7.0.33
 - MySQL 5.6.43
 - Nginx 1.14.2
 - phpMyAdmin
