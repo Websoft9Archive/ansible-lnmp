@@ -1,4 +1,18 @@
 ---
+
+- name: Add Nginx repository
+  template:
+    src: nginx.repo
+    dest: /etc/yum.repos.d/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: update
+  yum: 
+    name: '*'
+    state: latest
+
 - name: Install Nginx
   yum: name=nginx state=latest
 
