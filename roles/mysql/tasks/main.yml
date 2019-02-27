@@ -114,3 +114,8 @@
     regexp: '/root/init.sh'
     line: '/root/init.sh'
     mode: 0750
+
+- name: Password Text File  Permission
+  file:
+    path: /root/password.txt
+    mode: 0640
