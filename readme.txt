@@ -26,6 +26,7 @@ Websoft9 LNMP stack ships with the following software versions:
 - Zend OPcache 7.0.33
 
 If you are using the PHP+Java Image,you should know that PHP+Java Stack is just add Tomcat to LNMP Stack,only a simple change.
+
 - openjdk-1.8.0.191.b12-1.el7_6.x86_64
 - TomCat 7.0.76
 
