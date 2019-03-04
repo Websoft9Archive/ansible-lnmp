@@ -10,7 +10,7 @@ it easier than ever to discover, install, Use Open Source software
 
 You can learn more about Websoft9 at https://websoft9.com
 
-Websoft9 LAMP stack is an easy to install and easy to use open source Web 
+Websoft9 LNMP stack is an easy to install and easy to use open source Web 
 Platform. It combines leading open source projects, such as PHP,MYSQL,phpMyAdmin,Nginx...
 
 
