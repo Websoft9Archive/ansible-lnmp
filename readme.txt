@@ -16,7 +16,7 @@ Platform. It combines leading open source projects, such as PHP,MYSQL,phpMyAdmin
 
 2. COMPONENTS and Version
 
-Websoft9 IIS stack ships with the following software versions:
+Websoft9 LNMP stack ships with the following software versions:
 
 ********
 — php 7.0.33
@@ -24,7 +24,10 @@ Websoft9 IIS stack ships with the following software versions:
 - Nginx 1.14.2
 - phpMyAdmin
 - Zend OPcache 7.0.33
-- 
+
+If you are using the PHP+Java Image,you should know that PHP+Java Stack is just add Tomcat to LNMP Stack,only a simple change.
+- openjdk-1.8.0.191.b12-1.el7_6.x86_64
+- TomCat 7.0.76
 
 --- PHP Modules ---
 
