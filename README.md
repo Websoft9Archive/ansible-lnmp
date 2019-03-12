@@ -10,5 +10,13 @@ mysql,php版本可以选，另外还有其他变量
 mysqlver: 56
 phpver: 70
 
+### 如何增加java支持？
+
+运行如下命令，重启即可
+
+~~~
+yum install tomcat-* -y && systemctl enable tomcat
+~~~
+
 ## 其他事项
 安装Certbot时 可能会报错 忽略即可 加入了错误处理
