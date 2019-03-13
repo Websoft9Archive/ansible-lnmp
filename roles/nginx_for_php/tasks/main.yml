@@ -16,6 +16,12 @@
 - name: Install Nginx
   yum: name=nginx state=latest
 
+- name: Create Date directory
+  file: 
+      path: /data/
+      state: directory
+
+
 - name: Create WebSite directory
   file: 
       path: /data/wwwroot/www.example.com
