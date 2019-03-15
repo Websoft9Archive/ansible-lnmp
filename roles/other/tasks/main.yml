@@ -27,6 +27,7 @@
 - name: Setting File Permission
   shell: find /data/* -type f -exec chmod 640 {} \;
 
+<<<<<<< HEAD
 - name: Setting Directory Permission
   shell: find /data/* -type d -exec chmod 750 {} \;
 
@@ -39,3 +40,7 @@
 - name: Seting Owner and Group for MySQL
   shell: chown -R mysql. /data/mysql
   
+=======
+# - name: Setting Directory Permission
+#   shell: find /data/* -type d -exec chmod 750 {} \;
+>>>>>>> 836daa69f6da930fccbd27f42e8da07d1c53aee8
