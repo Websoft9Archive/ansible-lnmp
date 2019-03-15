@@ -29,3 +29,13 @@
 
 - name: Setting Directory Permission
   shell: find /data/* -type d -exec chmod 750 {} \;
+
+- name: Seting Owner and Group for Nginx
+  shell: chown -R nginx. {{item}}
+  with_items:
+    - /data/wwwroot
+    - /data/apps
+
+- name: Seting Owner and Group for MySQL
+  shell: chown -R mysql. /data/mysql
+  
