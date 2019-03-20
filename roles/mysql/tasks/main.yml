@@ -29,8 +29,6 @@
   template: src=my.cnf dest=/etc/my.cnf
   notify: restart MySQL
 
-
-
 - name: Start MySQL{{mysqlver}} Service
   service: name=mysqld state=started enabled=yes
   
@@ -104,9 +102,18 @@
 
 - name: Databases Random Password
   copy: 
-    src: init.sh
-    dest: /root/
+    src: init-57.sh
+    dest: /root/init.sh
     mode: 0750
+  when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
+
+
+- name: Databases Random Password
+  copy: 
+    src: init-56.sh
+    dest: /root/init.sh
+    mode: 0750
+  when: (mysql_version.stdout.find('5.5') != -1) or (mysql_version.stdout.find('5.6') != -1)
 
 - name: Setting Startup
   lineinfile:
@@ -115,7 +122,5 @@
     line: '/root/init.sh'
     mode: 0750
 
-- name: Password Text File  Permission
-  file:
-    path: /root/password.txt
-    mode: 0640
+- name: change permission of password.txt
+  shell: chmod 640 /root/password.txt
