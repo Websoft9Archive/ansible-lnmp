@@ -15,7 +15,7 @@ phpver: 70
 运行如下命令，重启即可
 
 ~~~
-yum install tomcat-* -y && systemctl enable tomcat
+yum install tomcat-* -y && systemctl enable tomcat && systemctl start tomcat
 ~~~
 
 ## 其他事项
