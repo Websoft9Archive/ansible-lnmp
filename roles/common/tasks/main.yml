@@ -7,13 +7,15 @@
 
 
 - name: Install REMI Repo
-  yum: name=https://mirrors.tuna.tsinghua.edu.cn/remi/enterprise/remi-release-7.rpm
+  yum: name=https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
-# - name: add dns for baiducloud
-#   shell: echo "nameserver 8.8.8.8" >>/etc/resolv.conf
 
-# - name: restart networdk
-#   service: name=network state=restarted
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name:  temporarily disable Selinux
+  shell: setenforce 0 
 
 - name: Install Common Software
   yum: 
@@ -50,11 +52,6 @@
       regexp: '/mnt/swap'
       line: "/mnt/swap swap swap defaults 0 0"
       state: present
-
-- name: change swapfile permission
-  file:
-    path: /mnt/swap
-    mode: 0600
 
 - name: Fix No space left on device
   sysctl:

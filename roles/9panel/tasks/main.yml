@@ -15,8 +15,8 @@
 - name: Enable 9panel I
   lineinfile:
     path: /data/apps/9panel/js/websoft9.js
-    regexp: '"name":"LNMP","switch":0,'
-    line: '"name":"LNMP","switch":1,'
+    regexp: 'var set_infrastructure="LAMP";'
+    line: 'var set_infrastructure="LNMP";'
 
 - name: Set default site I
   shell: cp -rp /data/apps/9panel/*  /data/wwwroot/www.example.com
