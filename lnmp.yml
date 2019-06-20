@@ -1,6 +1,6 @@
 ---
 - name: LNMP
-  hosts: server
+  hosts: all
   remote_user: root
 
   roles:
