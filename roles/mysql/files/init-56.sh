@@ -7,7 +7,7 @@ systemctl restart mysqld
 mysqladmin -uroot -p${old_password} -h 127.0.0.1 password $new_password
 mysqladmin -uroot -p${old_password} -h localhost password $new_password
 
-echo 'Databases root Password:'$new_password  > /credentials/password.txt
+echo -e 'MySQL username:root\nDatabases root Password:'$new_password  > /credentials/password.txt
 
 
 sed -i "s/\/root\/init.sh//" /etc/rc.local

@@ -119,7 +119,7 @@
     state: touch
 
 - name: Write Databases Password
-  shell: echo 'Dtabases root Password:'{{mysql_password}}  > /credentials/password.txt
+  shell: echo -e 'MySQL username:root\nMySQL password:'{{mysql_password}}  > /credentials/password.txt
 
 - name: Databases Random Password
   copy: 
