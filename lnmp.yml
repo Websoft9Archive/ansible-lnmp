@@ -1,7 +1,10 @@
 ---
 - name: LNMP
   hosts: all
-  remote_user: root
+  become: yes
+  become_method: sudo
+  become_user: root
+  remote_user: '{{admin_username}}'
 
   roles:
     - { role: common , tags: "common"} 
