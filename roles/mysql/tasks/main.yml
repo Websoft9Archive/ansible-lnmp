@@ -98,7 +98,7 @@
 
 
 - name: Write Databases Password
-  shell: echo 'Dtabases root Password:'{{mysql_password}}  > /root/password.txt
+  shell: echo 'Dtabases root Password:'{{mysql_password}}  > /credentials/password.txt
 
 - name: Databases Random Password
   copy: 
@@ -123,4 +123,4 @@
     mode: 0750
 
 - name: change permission of password.txt
-  shell: chmod 640 /root/password.txt
+  shell: chmod 640 /credentials/password.txt
