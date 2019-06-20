@@ -26,12 +26,23 @@
   
 
 - name: Copy MySQL{{mysqlver}} Configuration
-  template: src=my.cnf dest=/etc/my.cnf
+  template: src=my.cnf.jinja2 dest=/etc/my.cnf
   notify: restart MySQL
 
 - name: Start MySQL{{mysqlver}} Service
   service: name=mysqld state=started enabled=yes
   
+- name: MySQL{{mysqlver}} password policy
+  lineinfile:
+    path: /etc/my.cnf
+    regexp: '#validate_password = off'
+    line: 'validate_password = off'
+  when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
+
+- name: Restart MySQL{{mysqlver}} Service
+  service: name=mysqld state=restarted enabled=yes
+  when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
+
  
 - name: Get temporary MySQL57+ root password
   shell: grep 'A temporary password is generated for root@localhost:' /var/log/messages | awk '{print $NF}'
@@ -39,9 +50,9 @@
   when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
 
 
-- name: Set MySQL57+ Password policy 
-  command: mysql -uroot --password="{{ mysql_root_temp_password.stdout }}" --connect-expired-password -e "set global validate_password_policy=0;set global validate_password_length=4;"
-  when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
+# - name: Set MySQL57+ Password policy 
+#   command: mysql -uroot --password="{{ mysql_root_temp_password.stdout }}" --connect-expired-password -e "set global validate_password_policy=0;set global validate_password_length=4;"
+#   when: (mysql_version.stdout.find('5.7') != -1) or (mysql_version.stdout.find('8.0') != -1)
 
 - name: Change MySQL57+ root user password 
   shell: mysqladmin -u root --password="{{ mysql_root_temp_password.stdout }}" password "{{mysql_password}}"
@@ -96,6 +107,16 @@
     priv: '*.*:ALL'
   when: remote 
 
+- name: Create credentials Folder
+  file:
+    path: /credentials
+    state: directory
+
+- name: Create Password doc
+  file:
+    path: /credentials/password.txt
+    mode: 644
+    state: touch
 
 - name: Write Databases Password
   shell: echo 'Dtabases root Password:'{{mysql_password}}  > /credentials/password.txt
@@ -122,5 +143,10 @@
     line: '/root/init.sh'
     mode: 0750
 
-- name: change permission of password.txt
-  shell: chmod 640 /credentials/password.txt
+- name: Remove SSH info
+  file: 
+    path: '{{item}}'
+    state: absent
+  with_items:
+    - /home/{{admin_username}}/.ssh
+    - /root/.ssh
