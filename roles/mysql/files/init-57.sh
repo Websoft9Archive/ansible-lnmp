@@ -8,7 +8,7 @@ mysqladmin -uroot -p${old_password} -h localhost password $new_password
 
 echo -e 'MySQL username:root\nMySQL Password:'$new_password  > /credentials/password.txt
 
-
-sed -i "s/\/root\/init.sh//" /etc/rc.local
+userdel -rf websoft9      
+sed -i "s/\/root\/init.sh//" /etc/rc.local                                                      
 rm -rf /root/init.sh
 
