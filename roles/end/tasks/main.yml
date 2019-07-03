@@ -2,7 +2,6 @@
   shell: waagent -deprovision+user --force
   when: cloud == "azure"
 
-
 - name: Remove SSH info
   file: 
     path: '{{item}}'
