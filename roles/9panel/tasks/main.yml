@@ -41,4 +41,6 @@
       owner: nginx
       group: nginx
       recurse: yes
-  notify: restart nginx
+
+- name: restart nginx
+  service: name=nginx state=restarted enabled=yes

@@ -36,15 +36,17 @@
 
 - name: Copy Nginx Configuration 
   copy: src=nginx.conf dest=/etc/nginx
-  notify: restart nginx
+
 
 - name: Copy Nginx PHP support Configuration 
   copy: src=php.conf dest=/etc/nginx
-  notify: restart nginx
+
 
 - name: Copy Nginx other Configuration I
   copy: src=conf.d dest=/etc/nginx
-  notify: restart nginx
+
+- name: restart nginx
+  service: name=nginx state=restarted enabled=yes
 
 - block:
   - name: Install Certbot
