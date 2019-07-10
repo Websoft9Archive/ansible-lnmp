@@ -1,6 +1,10 @@
 ---
+- vars:
+    cloud: none
+    
 - name: System Upgrade
   yum: name=* state=latest
+
 
 - name: Install EPEL
   yum: name=epel-release state=installed
