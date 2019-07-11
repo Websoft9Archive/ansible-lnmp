@@ -1,0 +1,3 @@
+#!/bin/bash
+
+chown -R nginx: -R /var/lib/php

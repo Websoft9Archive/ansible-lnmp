@@ -30,12 +30,6 @@
 - name: restart PHP-FPM
   service: name=php-fpm state=restarted enabled=yes
 
-
-- name: PHP-FPM update fixed
-  lineinfile: 
-    dest: /etc/cron.daily/0yum-daily.cron
-    line: 'chown nginx. -R /var/lib/php'
-
 - name: PHP Session/Cache fixed
   file:
     path: /var/lib/php
@@ -46,3 +40,9 @@
 
 - name: Start redis
   service: name=redis state=started enabled=yes
+
+- name: PHP-FPM update fixed
+  copy: 
+    src: 1php-fpm-update-fixed
+    dest: /etc/cron.hourly/
+    mode: 750
