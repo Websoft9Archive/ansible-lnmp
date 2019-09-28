@@ -1,12 +1,12 @@
 # Initial Installation
 
-If you have completed the LNMP deployment on Cloud Platform, the following steps is for you to start use it quikly
+If you have completed the LEMP deployment on Cloud Platform, the following steps is for you to start use it quikly
 
 ## Preparation
 
 1. Get the **Internet IP** on your Cloud Platform
 2. Check you **[Inbound of Security Group Rule](https://support.websoft9.com/docs/faq/tech-instance.html)** of Cloud Console to ensure the TCP:80 is allowed
-3. Make a domain resolution on your DNS Console if you want to use domain for LNMP
+3. Make a domain resolution on your DNS Console if you want to use domain for LEMP
 
 ## Usability test
 
@@ -16,17 +16,17 @@ If you have completed the LNMP deployment on Cloud Platform, the following steps
 2. You can get the basics of image, manage the database, access docs, and helpdesk from 9Panel
 ## Log in Database
 
-LNMP includes MySQL and Web-GUI tool `phpMyAdmin`, [Log in MySQL](/zh/admin-mysql.md) to manage your database now
+LEMP includes MySQL and Web-GUI tool `phpMyAdmin`, [Log in MySQL](/zh/admin-mysql.md) to manage your database now
 
 ![9panel](https://libs.websoft9.com/Websoft9/DocsPicture/en/9panel/9panel-mysql-websoft9.png)
 
 ## Application Installation
 
-You can install multiple applications on LNMP, refer to [Applications Deployment](/solution-deployment.md)
+You can install multiple applications on LEMP, refer to [Applications Deployment](/solution-deployment.md)
 
 ## Q&A
 
-#### I can't visit the start page of LNMP?
+#### I can't visit the start page of LEMP?
 
 Your TCP:80 of Security Group Rules is not allowed so there no response from Chrome or Firefox
 

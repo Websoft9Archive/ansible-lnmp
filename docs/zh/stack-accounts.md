@@ -5,10 +5,9 @@
 ## MySQL
 
 * 管理员账号：*`root`*
-* 管理员密码：存储在您的服务器指定文件中（ */credentials/password.txt* ）
+* 管理员密码：存储在您的服务器指定文件中（ */credentials/password.txt* ）    
+  建议通过云控制台的命令终端，运行下图**红框**所示命令，获取数据库密码   
    ![运行cat命令](https://libs.websoft9.com/Websoft9/DocsPicture/zh/common/catdbpassword-websoft9.png)
-
-  建议通过云控制台的命令终端，运行`cat /credentials/password.txt` 获取数据库密码（参上图）
 
   **注意**：若服务器上不存在 password.txt 文件，那么数据库密码是 `123456`。此时务必修改为强密码，类似于：f@N7eUUm25xAjP!$ ，这样有助于提高数据库的安全性，减少数据库密码被破解的风险。
 

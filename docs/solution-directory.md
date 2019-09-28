@@ -20,11 +20,11 @@ Assume the folder name of your application is **mysite1** in the directory */dat
 2. Copy the original folder ***mysite1***  to the destination directory: */data2/wwwroot*
    ![](https://libs.websoft9.com/Websoft9/DocsPicture/en/lamp/lamp-copysite1todata2-websoft9.png)
 3. Modify the *DocumentRoot, Directory* items in the VirtualHost segment of **default.conf**
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/en/lamp/lamp-modifyvhostdata2-websoft9.png)
+   ![](https://libs.websoft9.com/Websoft9/DocsPicture/en/lnmp/lnmp-modifyvhostdata2-websoft9.png)
 4. Save default.conf, and restart service
       ~~~
       # Restart Nginx service
-      systemctl restart httpd
+      systemctl restart nginx
       ~~~
 5. Test the migration, then delete the **original folder**
 
@@ -32,7 +32,7 @@ Assume the folder name of your application is **mysite1** in the directory */dat
 
 There is no special case, we do not recommend migrating database files to another directory on the Server. After all, major cloud platform's disks can be expanded.
 
-If you want change the [Database files](/zh/stack-components.md#mysql) locally, please refer the docs [ MySQL Documentation](https://support.websoft9.com/docs/mysql/solution-modifydatadir.html)
+If you want change the [Database files](/stack-components.md#mysql) locally, please refer the docs [ MySQL Documentation](https://support.websoft9.com/docs/mysql/solution-modifydatadir.html)
 
 ## Migrate /data to Data Disk 
 
@@ -45,14 +45,14 @@ The **/data** folder is on the system disk by default. When you need to transfer
 5. **Mount** data disk to the folder */temp*
 6. Stop Nginx and MySQL services
    ```shell
-   systemctl stop httpd mysqld
+   systemctl stop nginx mysql
    ```
 7. Copy all files under */data* to */temp*
   > If the data is large, the cut or copy may fail
 8. After the data transfer is completed, **umount** your data disk from */temp* and **Mount** it to */data* again
 9. Start Nginx and MySQL
    ```shell
-   systemctl start httpd mysqld
+   systemctl start nginx mysql
    ```
 10. Test it
 
@@ -62,7 +62,7 @@ The **/data** folder is on the system disk by default. When you need to transfer
 
 The migration of applications from one server (original Server) to another (destination Server) is a complex plan. The basic steps are as follows:
 
-1. [Deploy LNMP](/stack-deployment.md) on the **destination Server**.
+1. [Deploy LEMP](/stack-deployment.md) on the **destination Server**.
 2. Download the application's source code from **original Server** to the local computer through WinSCP, and then upload them to **destination Server**.
 3. Export the database from the **original Server** via phpMyAdmin and then import them to **destination server**.
 4. Copy the contents of the **default.conf** from the **original Server** to the **default.conf** of **destination server** .

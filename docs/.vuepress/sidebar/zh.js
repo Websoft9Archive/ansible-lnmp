@@ -23,6 +23,7 @@ module.exports = [
       '/zh/solution-backup',
       '/zh/solution-upgrade',
       '/zh/solution-java',
+      '/zh/solution-lanmp',
       '/zh/solution-more',
     ]
   },

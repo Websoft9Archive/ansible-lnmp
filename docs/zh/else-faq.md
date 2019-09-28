@@ -1,23 +1,29 @@
 # FAQ
 
+#### LEMP 与 LNMP 有何不同？
+
+LEMP 就是 LNMP，是不同的用户采用的不同名称而已
+
 #### 默认字符集是什么？
 UTF-8
 
-#### Nginx工作模式有event,prefork,worker等，LNMP 默认是哪个？
-prefork
-
 #### Nginx 虚拟主机配置文件是什么？
 
-虚拟主机配置文件是 Nginx 用于管理多个网站的**配置段集合**，路径为：*/etc/httpd/conf.d/default.conf*。  
-每个配置段的形式为： `<VirtualHost *:80> ...</VirtualHost>`，有多少个网站就有多少个配置段
+虚拟主机配置文件是 Nginx 用于管理多个网站的**配置段集合**，路径为：*/etc/nginx/conf.d/default.conf*。  
+每个配置段的形式为： `server{ }`，有多少个网站就有多少个配置段
+
+#### LNMP 环境中默认有伪静态模板吗？
+
+已经内置了部分常用网站的伪静态规则文件，进入目录可以查看
+![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/lnmp-multi/lnmp-rewrite-1-websoft9.png)
 
 #### 如何修改示例网站根目录？
 
-示例网站路径信息 */data/wwwroot/www.example.com* 存放在 [Nginx 虚拟主机配置文件](/zh/stack-components.md#apache)中
+示例网站路径信息 */data/wwwroot/www.example.com* 存放在 [Nginx 虚拟主机配置文件](/zh/stack-components.md#nginx)中
 
 #### LNMP 环境是否支持部署多个网站？
 
-支持。每增加一个网站，只需在[Nginx 虚拟主机配置文件](/zh/stack-components.md#apache)中增加对应的  VirtualHost 即可。
+支持。每增加一个网站，只需在[Nginx 虚拟主机配置文件](/zh/stack-components.md#nginx)中增加对应的 **server{ }** 即可。
 
 #### 如果没有域名是否可以部署 LNMP？
 
@@ -37,7 +43,7 @@ prefork
 
 #### 网站源码路径如何修改？
 
-通过修改 [Nginx 虚拟主机配置文件](/zh/stack-components.md#apache) 中相关路径参数
+通过修改 [Nginx 虚拟主机配置文件](/zh/stack-components.md#nginx) 中相关路径参数
 
 #### 如何删除9Panel?
 
@@ -51,15 +57,11 @@ prefork
 
 我们在 Github 上报错了一份完整的 php.ini 文件模板，[下载](https://github.com/Websoft9/ansible-lamp/blob/master/roles/php/templates/php.ini) 后覆盖你服务器上的 */ect/php.ini*
 
-#### 如何取消 Nginx Test 页面？
-
-使用 # 号将: */etc/httpd/conf.d/welcome.conf* 中的所有内容全部注释掉，然后重启 Nginx 服务
-
 #### 如何修改上传的文件权限?
 
 ```shell
 # 拥有者
-chown -R apache.apache /data/wwwroot/
+chown -R nginx.nginx /data/wwwroot/
 # 读写执行权限
 find /data/wwwroot/ -type d -exec chmod 750 {} \;
 find /data/wwwroot/ -type f -exec chmod 640 {} \;
@@ -67,16 +69,16 @@ find /data/wwwroot/ -type f -exec chmod 640 {} \;
 
 #### 如果设置 HTTP 跳转到 HTTPS？
 
-建议在网站根目录下的.htacesss文件中增加redirect规则，参考如下：
+只需在网站对应的 server{} 配置段中增加规则即可：
 ```
-RewriteEngine on
-RewriteBase /
-RewriteCond %{SERVER_PORT} !^443$
-RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
+ if ($scheme != "https") 
+    {
+    return 301 https://$host$request_uri;
+    }
 ```
 #### LNMP 默认安装了哪些 Nginx模块？ 
 
-运行命令 `apachectl -M` 查看
+运行命令 `nginx -V` 查看
 
 #### LNMP 默认安装了哪些 PHP 模块？
 
@@ -84,11 +86,11 @@ RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 
 #### 如何启用或禁用 Nginx 模块？
 
-以伪静态模块为例。打开 [Nginx模块配置文件](/zh/stack-components.md#apache)，找到 *LoadModule rewrite_module modules/mod_rewrite.so*，通过“#”作为注释来开启或禁用此模块
+不支持模块启用或关闭
 
 #### 如何禁用IP访问网站，防止恶意解析？
 
-参考 [Nginx 相关配置文档](https://support.websoft9.com/docs/linux/zh/webs-apache.html#禁用ip访问-防止恶意解析)
+参考 [Nginx 相关配置文档](https://support.websoft9.com/docs/linux/zh/webs-nginx.html#禁用ip访问-防止恶意解析)
 
 #### 没有域名是否可以通过 http://公网IP/mysite1 这样的方式访问网站？
 

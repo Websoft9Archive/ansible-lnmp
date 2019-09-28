@@ -11,28 +11,21 @@ If you want to use a free certificate, just run the one command `certbot` on you
 If you have applied for a commercial certificate, complete the HTTPS configuration in just three steps:
 
 1. Upload your certificate to the directory of your instance: */data/cert* 
-2. Edit the vhost configuration file: */etc/httpd/conf.d/default.conf* 
-3. Insert the **HTTPS template** into `<VirtualHost *:443>--</VirtualHost>` and modify certificate path
+2. Edit the vhost configuration file: */etc/nginx/conf.d/default.conf* 
+3. Insert the **HTTPS template** into `server{}` of your application and modify certificate path
    ``` text
    #-----HTTPS template start------------
-   <VirtualHost *:443>
-    ServerName  mysite1.yourdomain.com
-    DocumentRoot "/data/wwwroot/mysite1"
-    #ErrorLog "logs/mysite1.yourdomain.com-error_log"
-    #CustomLog "logs/mysite1.yourdomain.com-access_log" common
-    <Directory "/data/wwwroot/mysite1">
-    Options Indexes FollowSymlinks
-    AllowOverride All
-    Require all granted
-    </Directory>
-    SSLEngine on
-    SSLCertificateFile  /data/cert/mysite1.yourdomain.com.crt
-    SSLCertificateKeyFile  /data/cert/mysite1.yourdomain.com.key
-    </VirtualHost>
+   listen 443 ssl; 
+   ssl_certificate /data/cert/xxx.crt;
+   ssl_certificate_key /data/cert/xxx.key;
+   ssl_session_timeout 5m;
+   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+   ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+   ssl_prefer_server_ciphers on;
    #-----HTTPS template end------------
    ```
 4. Save file and [Restart Nginx service](/admin-services.md)
 
 ## Special Guide
 
-For details on configuring HTTPS pre-conditions, HTTPS configuration segment templates, precautions, detailed steps, and troubleshooting, refer to the [HTTPS Special Guide](https://support.websoft9.com/docs/faq/tech-https.html#apache) provided by Websoft9 
+For details on configuring HTTPS pre-conditions, HTTPS configuration segment templates, precautions, detailed steps, and troubleshooting, refer to the [HTTPS Special Guide](https://support.websoft9.com/docs/faq/tech-https.html#nginx) provided by Websoft9 

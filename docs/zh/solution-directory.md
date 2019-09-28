@@ -26,7 +26,7 @@
       ~~~
       # 重启Nginx服务命令
       sudo systemctl restart nginx
-      ~~~
+      ~~~ 
 5. 测试迁移后的结果，成功后可以删除原来的 *mysite1* 文件夹
 
 ## 迁移数据库文件（本地）
@@ -46,7 +46,7 @@
 5. 将数据盘挂载（mount）到:*/temp* 目录
 4. 停止云服务器上的 Nginx 和 MySQL 服务
     ~~~
-    sudo systemctl stop nginx mysqld
+    sudo systemctl stop nginx mysql
     ~~~
 
 5. 将当前 */data* 下所有文件拷贝到服务器临时文件夹 */temp*  中
@@ -55,7 +55,7 @@
 7. 连接服务器，将数据盘再次挂载（mount）到:*/data* 目录 
 8. 运行以下命令重新启动 Nginx 和 MySQL:
    ```
-   sudo systemctl start nginx mysqld
+   sudo systemctl start nginx mysql
    ``` 
 9. 测试迁移结果
 

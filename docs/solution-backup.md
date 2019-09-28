@@ -50,7 +50,7 @@ Manual backup for application is based on the **Exporting source code and databa
 The general manual backup operation steps are as follows:
 
 1. Just compression and download the entire */data/wwwroot* directory by SFTP 
-2. Export LNMP's database by [phpMyAdmin](/zh/admin-mysql.md)
+2. Export LEMP's database by [phpMyAdmin](/zh/admin-mysql.md)
    ![](https://libs.websoft9.com/Websoft9/DocsPicture/en/phpmyadmin/phpmyadmin-export-websoft9.png)
 3. Put the source code file and database file in the same folder, named according to the date
 4. Backup completed

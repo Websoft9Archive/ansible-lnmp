@@ -98,7 +98,8 @@
       # 重启Nginx服务命令
       sudo systemctl restart nginx
       ~~~
-5. 根据有无域名，本地浏览器访问：http://mysite1.yourdomain.com/mysite2  访问你的网站。
+5. 如果配置了域名，通过：*http://域名* 访问你的网站。
+6. 如果没有配置域名，通过：*http://mysite1.yourdomain.com/mysite2* 访问你的网站
 
 
 ## 安装第 N 个网站
@@ -111,7 +112,7 @@
 2. 绑定域名（非必要）
 3. 新增站点配置或修改示例站点配置
 4. 增加网站对应的数据库（非必要）
-5. 进入安装向导
+5. 进入安装向导 
 
 ## Server
 

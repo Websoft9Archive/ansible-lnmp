@@ -16,7 +16,7 @@ LNMP 预装包包含 LNMP 运行所需一序列支撑软件（简称为“组件
 
 Nginx 虚拟主机配置文件：*/etc/nginx/conf.d/default.conf*  
 Nginx 主配置文件： */etc/nginx/nginx.conf*  
-Nginx 日志文件： */var/log/httpd*  
+Nginx 日志文件： */var/log/nginx*  
 Nginx 伪静态规则目录： */etc/nginx/conf.d/rewrite*
 
 **default.conf** 默认存在一个 [server（虚拟主机）](https://support.websoft9.com/docs/linux/zh/webs-nginx.html#虚拟主机) 配置项，对应的就是 **示例网站**
@@ -46,7 +46,7 @@ PHP 配置文件： */etc/php.ini*
 PHP Modules 配置文件目录： */etc/php.d*
 ```
 # 默认已安装的 PHP Modules
-Core  date  libxml  openssl  pcre  zlib  filter  hash  Reflection  SPL  session  standard  apache2handler  
+Core  date  libxml  openssl  pcre  zlib  filter  hash  Reflection  SPL  session  standard    
 bcmath  bz2  calendar  ctype  curl  dom  mbstring  fileinfo  ftp  gd  gettext  gmp  iconv  
 imap  intl  json  ldap  exif  mcrypt  mysqlnd  odbc  PDO  Phar  posix  recode  shmop  
 SimpleXML  snmp  soap  sockets  sqlite3  sysvmsg  sysvsem  sysvshm  tokenizer  xml  xmlwriter  xsl  mysqli  
@@ -62,7 +62,7 @@ MySQL 可视化管理地址: *http://服务器公网IP/phpmyadmin*，用户名�
 
 ### phpMyAdmin
 
-phpMyAdmin 配置文件：*/etc/httpd/conf.d/phpmyAdmin.conf*
+phpMyAdmin 配置文件：*/etc/nginx/conf.d/phpmyAdmin.conf*
 
 ### Redis
 

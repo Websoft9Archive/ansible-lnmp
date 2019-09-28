@@ -1,6 +1,6 @@
 # Parameters
 
-The LNMP deployment package contains a sequence software (referred to as "components") required for LNMP to run. The important information such as the component name, installation directory path, configuration file path, port, version, etc. are listed below.
+The LEMP deployment package contains a sequence software (referred to as "components") required for LEMP to run. The important information such as the component name, installation directory path, configuration file path, port, version, etc. are listed below.
 
 ## Path
 
@@ -13,28 +13,31 @@ Example application directory: */data/wwwroot/www.example.com*
 
 ### Nginx
 
-Nginx vhost configuration file: */etc/httpd/conf.d/default.conf*    
-Nginx main configuration file: */etc/httpd/conf/httpd.conf*   
-Nginx logs file: */var/log/httpd*  
-Nginx module configuration file: */etc/httpd/conf.modules.d/00-base.conf*    
+Nginx vhost configuration file: */etc/nginx/conf.d/default.conf*    
+Nginx main configuration file: */etc/nginx/nginx.conf*   
+Nginx logs file: */var/log/nginx*  
+Nginx rewrite rules directory: */etc/nginx/conf.d/rewrite*    
 
-**default.conf** includes one [VirtualHost](https://support.websoft9.com/docs/linux/webs-apache.html#vhost) configuration items whitch matched the **Example application**
+**default.conf** includes one [server{}](https://support.websoft9.com/docs/linux/webs-nginx.html#vhost) configuration items whitch matched the **Example application**
 ```
-<VirtualHost *:80>
-ServerName www.mydomain.com
-ServerAlias other.mydomain.com
-DocumentRoot "/data/wwwroot/www.example.com"
-ErrorLog "/var/log/httpd/www.mydomain.com_error_apache.log"
-CustomLog "/var/log/httpd/www.mydomain.com_apache.log" common
-<Directory "/data/wwwroot/www.example.com">
-Options Indexes FollowSymlinks
-AllowOverride All
-Require all granted
-</Directory>
-</VirtualHost>
+server
+{
+listen 80;
+server_name www.example.com  example.com;
+index index.html index.htm index.php;
+root  /data/wwwroot/www.example.com;
+error_log /var/log/nginx/example.com-error.log crit;
+access_log  /var/log/nginx/example.com-access.log;
+
+include conf.d/extra/*.conf;
+
+## Includes one of your Rewrite rules if you need, examples
+ # include conf.d/rewrite/wordpress.conf;
+ # include conf.d/rewrite/joomla.conf;
+}
 ```
 
-> How many websites you need, you should add the same number of VirtualHost to **default.conf**
+> How many websites you need, you should add the same number of **server{ }** to **default.conf**
 
 ### PHP
 
@@ -42,7 +45,7 @@ PHP configuration file: */etc/php.ini*
 PHP Modules configurations directory: */etc/php.d*
 ```
 # Installed PHP Modules
-Core  date  libxml  openssl  pcre  zlib  filter  hash  Reflection  SPL  session  standard  apache2handler  
+Core  date  libxml  openssl  pcre  zlib  filter  hash  Reflection  SPL  session  standard    
 bcmath  bz2  calendar  ctype  curl  dom  mbstring  fileinfo  ftp  gd  gettext  gmp  iconv  
 imap  intl  json  ldap  exif  mcrypt  mysqlnd  odbc  PDO  Phar  posix  recode  shmop  
 SimpleXML  snmp  soap  sockets  sqlite3  sysvmsg  sysvsem  sysvshm  tokenizer  xml  xmlwriter  xsl  mysqli  
@@ -58,7 +61,7 @@ MySQL Web Management URL: *http://Internet IP/9panel*, get credential from [Use
 
 ### phpMyAdmin
 
-phpMyAdmin configuration file: */etc/httpd/conf.d/phpmyAdmin.conf*
+phpMyAdmin configuration file: */etc/nginx/conf.d/phpmyAdmin.conf*
 
 ### Redis
 
@@ -76,8 +79,8 @@ These ports should be opened for this application:
 | Name | Number | Use |  Necessity |
 | --- | --- | --- | --- |
 | MySQL | 3306 | Remote connect MySQL | Optional |
-| HTTP | 80 | HTTP requests for LNMP | Required |
-| HTTPS | 443 | HTTPS requests LNMP | Optional |
+| HTTP | 80 | HTTP requests for LEMP | Required |
+| HTTPS | 443 | HTTPS requests LEMP | Optional |
 
 ## Version
 
@@ -93,14 +96,11 @@ php -v
 # List Installed PHP Modules
 php -m
 
-# Nginx version on Centos
-httpd -v
-
-# Nginx version on Ubuntu
-apache2 -v
+# Nginx version
+nginx -v
 
 # List Installed Nginx Modules
-apachectl -M
+nginx -V
 
 # MySQL version
 mysql -V

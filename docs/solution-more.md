@@ -4,31 +4,47 @@ Each of the following solutions has been proven to be effective and we hope to b
 
 ## Domain binding
 
-The precondition for binding a domain is that LNMP can accessed by domain name.
+The precondition for binding a domain is that LEMP can accessed by domain name.
 
 Nonetheless, from the perspective of server security and subsequent maintenance considerations, the **Domain Binding** step cannot be omitted.
 
-LNMP domain name binding steps:
+LEMP domain name binding steps:
 
 1. Connect your Cloud Server
-2. Modify [Nginx vhost configuration file](/stack-components.md#apache), change the **ServerName**'s value to your domain name
+2. Modify [Nginx vhost configuration file](/stack-components.md#nginx), change the **server_name**'s value to your domain name
    ```text
-   <VirtualHost *:80>
-   ServerName www.mydomain.com # modify it to your domain name
-   DocumentRoot "/data/wwwroot/mysite2"
+   server
+   {
+   listen 80;
+   server_name www.example.com;  # 此处修改为你的域名
+   index index.html index.htm index.php;
+   root  /data/wwwroot/www.example.com;
    ...
+   }
    ```
-3. Save it and restart [Nginx Service](/admin-services.md#apache)
+3. Save it and restart [Nginx Service](/admin-services.md#nginx)
 
 
 ## Use Rewrite
 
-Three steps to use rewrite for your application:
+Rewrite was enabled by default on LEMP, three steps to use rewrite for your application:
 
-1. Check the [Nginx vhost configuration file](/stack-components.md#apache) to make sure that the Rewrite Module is enabled
-   > Rewrite was enabled by default on LNMP
-2. Add the *AllowOverride All* to your VirtualHost in the file of [Nginx vhost configuration file](/stack-components.md#apache)
-3. Add the **rewrite rules** in the root directory of your application
+1.  Add a new rewirte rules configuration file(e.g. wordpress.conf) to the directory:  */etc/nginx/conf.d/rewrite* on your Server
+2.  Edit the **server{ }** segment of your [Nginx vhost configuration file](/stack-components.md#nginx), include your rewirte rules configuration file
+   ```text
+   server
+   {
+   listen 80;
+   server_name mysite2.yourdomain.com;  # modify it to your domain
+   index index.html index.htm index.php;
+   root  /data/wwwroot/mysite2;
+   ...
+
+   ## Includes one of your Rewrite rules if you need, examples
+   include conf.d/rewrite/wordpress.conf;  # inculde your rewrite rules here
+   }
+   ```
+3. Save it, then [Restart Nginx service](/admin-services.md#nginx)
 
 ## Rest MySQL *root* password
 
@@ -54,7 +70,7 @@ max_execution_time = 90
 # Memory Limit
 memory_limit – Minimum: 256M
 ```
-2. Save it and restart [Nginx Service](/admin-services.md#apache)
+2. Save it and restart [Nginx Service](/admin-services.md#nginx)
 
 ## PHP Version Upgrade
 

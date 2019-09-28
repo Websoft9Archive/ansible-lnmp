@@ -2,13 +2,13 @@
 
 故障处理主要通过日志文件进行分析，从某种程度上，处理故障就是解读日志文件。
 
-我们收集使用 LNMP 过程中最常见的故障，供您参考：
+我们收集使用 LNMP 过程中最常见的故障，供您参考： 
 
 ## 网站类
 
 #### 网站显示重定向错误？
 
-检查网站根目录下的 *.htaccess* 文件，分析其中的重定向规则，找到其中的死循环。
+打开Nginx虚拟主机配置文件，检查网站对应的 *server{}* 配置段内容，分析其中的重定向规则，找到其中的死循环。
 
 ## 数据库类
 
@@ -39,7 +39,7 @@ binlog主要用于出现没有备份的情况下，恢复数据库。但binlog�
   ~~~
 2. 重启mysql
   ~~~
-  systemctl restart mysqld
+  systemctl restart mysql
   ~~~
 
 #### phpMyAdmin 出现 Error during session...错误？
@@ -69,6 +69,20 @@ Nginx应用服务器出现502错误的原因很多，但是基本都是资源不
 *   php-fpm服务停止或者报错也会出现502，需要重启php-fpm
 
 #### 413 Request Entity Too Large
+
+这是由于上传文件大小超过了Nginx默认设置，因此需要修改 Nginx 这个限制：
+
+1. 使用 WinSCP 远程连接服务器
+2. 编辑 [Nginx 虚拟机主机配置文件](/zh/stack-components.md#nginx)
+3. 插入一行 `client_max_body_size 0;` 解除上传文件限制的配置项
+   ```
+   server {
+    listen 80;
+    server_name _;
+    client_max_body_size 0; #解除上传文件限制
+    ...
+   ```
+4. 保存并[重启 Nginx 服务](/zh/admin-services.md#nginx)
 
 ## 服务器类
 

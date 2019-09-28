@@ -1,6 +1,6 @@
 # Username and Password
 
-These accounts are required for LNMP image installation and configuration
+These accounts are required for LEMP image installation and configuration
 
 ## MySQL
 
@@ -11,7 +11,7 @@ These accounts are required for LNMP image installation and configuration
   ```
    ![Run the cat command](https://libs.websoft9.com/Websoft9/DocsPicture/zh/common/catdbpassword-websoft9.png)
 
-> If you want to log in MySQL, refer to [MySQL Web interface Management](/admin-mysql.md)
+> If you want to log in MySQL, refer to [MySQL Web interface Management](/admin-mysql.md) 
 
 ## Linux
 
