@@ -21,6 +21,7 @@ jobs:
       run: |
         echo $(pwd)
         echo $(ls)
+        cd docs
         npm install
         npm run-script build
       env:
