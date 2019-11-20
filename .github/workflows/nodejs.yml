@@ -24,7 +24,9 @@ jobs:
         vuepress build .
         git clone https://github.com/Websoft9/websoft9.github.io
         echo $(ls)
+        echo "==================================LS===============\n"
         cp -r html/* websoft9.github.io/docs/
+        echo "======================ls websoft9.github.io/docs/=============\n"
         echo $(ls websoft9.github.io/docs/)
 
       env:
