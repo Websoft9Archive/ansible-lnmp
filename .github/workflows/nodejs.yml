@@ -20,6 +20,7 @@ jobs:
     - name: npm install, build, and test
       run: |
         echo $(pwd)
+        echo $(ls)
         npm install
         npm run-script build
       env:
