@@ -19,10 +19,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and test
       run: |
-        echo $(pwd)
-        echo $(ls)
+        npm install -g vuepress 
         cd docs
-        npm install
-        npm run-script build
+        vuepress build .
       env:
         CI: true
