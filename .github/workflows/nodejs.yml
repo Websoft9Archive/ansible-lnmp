@@ -22,6 +22,21 @@ jobs:
         cd docs
         npm install -g vuepress
         vuepress build .
-  
+        git clone https://github.com/Websoft9/websoft9.github.io
+        echo $(ls)
+        cp -r html/* websoft9.github.io/docs/
+        echo $(ls websoft9.github.io/docs/)
+
       env:
         CI: true
+    # - name: Commit files
+    #   run: |
+    #     git config --local user.email "xu_junkai@foxmail.com"
+    #     git config --local user.name "Mozlk"
+    #     git commit -m "Add changes" -a
+    # - name: Push changes
+    #   uses: ad-m/github-push-action@master
+    #   with:
+    #     github_token: ${{ secrets.ACCESS_TOKEN }}
+    #     directory: GITHUB_WORKSPACE/docs/websoft9.github.io
+    #     repository: 
