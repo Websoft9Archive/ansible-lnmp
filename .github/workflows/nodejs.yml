@@ -21,6 +21,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and test
       run: |
+        cd ansible-lnmp/docs
         npm install 
         npm run-script build
       env:
