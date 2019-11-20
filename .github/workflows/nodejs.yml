@@ -19,19 +19,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and test
       run: |
-        echo "https://Mozlk:xu2jun%40kai%23%25@github.com" > ~/.git-credentials
-        git config --global credential.helper store
-        git config --global user.name "Mozlk"
-        git config --global user.email "xu_junkai@foxmail.com"
         cd docs
         npm install -g vuepress
         vuepress build .
-        git clone https://github.com/Websoft9/websoft9.github.io.git
-        cd websoft9.github.io
-        cp -r ../html/* docs/
-        git add
-        git commit -m 'add doc'
-        git push
-
+  
       env:
         CI: true
