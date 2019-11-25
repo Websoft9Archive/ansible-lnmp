@@ -11,6 +11,14 @@ sudo systemctl restart nginx
 sudo systemctl status nginx
 ```
 
+### PHP-FPM
+```shell
+systemctl start php-fpm
+systemctl stop php-fpm
+systemctl restart php-fpm
+systemctl status php-fpm
+```
+
 ### MySQL
 
 ```shell
