@@ -2,6 +2,14 @@
 
 These commands you must know when you using the LNMP of Websoft9
 
+### PHP-FPM
+```shell
+systemctl start php-fpm
+systemctl stop php-fpm
+systemctl restart php-fpm
+systemctl status php-fpm
+```
+
 ### Nginx
 
 ```shell

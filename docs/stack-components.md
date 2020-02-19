@@ -61,6 +61,8 @@ MySQL Web Management URL: *http://Internet IP/9panel*, get credential from [Use
 
 ### phpMyAdmin
 
+phpMyAdmin installation directory: */data/apps/phpmyadmin*  
+phpMyAdmin configuration file: */data/apps/phpmyadmin/config.inc.php*   
 phpMyAdmin configuration file: */etc/nginx/conf.d/phpmyAdmin.conf*
 
 ### Redis

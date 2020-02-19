@@ -62,7 +62,9 @@ MySQL 可视化管理地址: *http://服务器公网IP/phpmyadmin*，用户名�
 
 ### phpMyAdmin
 
-phpMyAdmin 配置文件：*/etc/nginx/conf.d/phpmyAdmin.conf*
+phpMyAdmin 安装目录: */data/apps/phpmyadmin*  
+phpMyAdmin 配置文件: */data/apps/phpmyadmin/config.inc.php*   
+phpMyAdmin 虚拟主机配置: */etc/nginx/php.conf*
 
 ### Redis
 
