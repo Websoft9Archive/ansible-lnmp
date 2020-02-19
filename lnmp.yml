@@ -7,7 +7,7 @@
     - vars/main.yml
   vars_prompt:
     - name: 'php_choose'
-      prompt: "Choose serial number to install PHP \n
+      prompt: "\nChoose serial number to install PHP \n\n
       1: PHP 5.6\n
       2: PHP 7.0\n
       3: PHP 7.1\n
@@ -18,7 +18,7 @@
       default: 4
 
     - name: 'mysql_choose'
-      prompt: "Choose serial number to install MySQL \n
+      prompt: "\nChoose serial number to install MySQL \n\n
       1: MySQL 5.5(only for CentOS7.x, AmazonLinux)\n
       2: MySQL MySQL5.6(only for CentOS7.x, AmazonLinux, Ubuntu16.04 )\n
       3: MySQL 5.7\n
