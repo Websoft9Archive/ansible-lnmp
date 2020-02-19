@@ -1,9 +1,0 @@
-[Unit]
-Description=auto run Chown
-[Service]
-Type=simple
-ExecStart=/usr/bin/python /usr/local/websoft9/main.py nginx /data/wwwroot
-Restart=always
-RestartSec=1
-[Install]
-WantedBy=multi-user.target

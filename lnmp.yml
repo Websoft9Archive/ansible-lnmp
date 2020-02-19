@@ -1,16 +1,66 @@
----
-- name: LNMP
+# 核心任务
+- name: LAMP
   hosts: all
   become: yes
   become_method: sudo
-  become_user: root
+  vars_files:
+    - vars/main.yml
+  vars_prompt:
+    - name: 'php_choose'
+      prompt: "Choose serial number to install PHP \n
+      1: PHP 5.6\n
+      2: PHP 7.0\n
+      3: PHP 7.1\n
+      4: PHP 7.2\n
+      5: PHP 7.3 (unavailable)\n
+      6: PHP 7.4 (unavailable)\n"
+      private: no
+      default: 4
 
-  roles:
-    - { role: common , tags: "common"} 
-    - { role: nginx_for_php , tags: "nginx_for_php"}
-    - { role: php-fpm , tags: "php-fpm"}
-    - { role: mysql , tags: "mysql"}
-    - { role: phpmyadmin , tags: "phpmyadmin"}
-    - { role: 9panel , tags: "9panel"}
-    - { role: other , tags: "other"}
+    - name: 'mysql_choose'
+      prompt: "Choose serial number to install MySQL \n
+      1: MySQL 5.5(only for CentOS7.x, AmazonLinux)\n
+      2: MySQL MySQL5.6(only for CentOS7.x, AmazonLinux, Ubuntu16.04 )\n
+      3: MySQL 5.7\n
+      4: MySQL 8.0\n"
+      private: no
+      default: 3
+
+  vars:
+    select_mysql_ver:
+      '1': "5.5"
+      '2': "5.6"
+      '3': "5.7"
+      '4': "8.0"
+    select_php_ver:
+      '1': "5.6"
+      '2': "7.0"
+      '3': "7.1"
+      '4': "7.2"
+      '5': "7.3"
+
+    mysql_version: "{{select_mysql_ver[mysql_choose]}}"
+    php_version: "{{select_php_ver[php_choose]}}"
     
+  pre_tasks:
+    - include_vars: roles/role_cloud/vars/cloud_download_url.yml
+      when: region == '1' or region == 1
+
+    - debug:
+        msg: LNMP will be installed, MySQL version is {{ mysql_version }}, PHP version is {{php_version}}, OS is {{ansible_distribution}}, region code is {{region}}
+    
+  roles:
+    - {role: role_common, tags: "role_common"}
+    - {role: role_cloud, tags: "role_cloud"}
+    - {role: role_nginx, tags: "role_nginx"}
+    - {role: role_redis, tags: "role_redis"}
+    - {role: role_mysql, tags: "role_mysql"}
+    - {role: role_php-fpm, tags: "role_php-fpm"}
+    - {role: role_lnmp, tags: "role_lmmp"}
+    - {role: role_phpmyadmin, tags: "role_phpmyadmin"}
+    - {role: role_9panel, tags: "role_9panel"}
+    - {role: role_inotify_watch, tags: "inotify_watch"}
+    - {role: role_init_password, tags: "init_password"}
+    - {role: role_end, tags: "role_end"}
+      
+
