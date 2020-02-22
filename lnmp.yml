@@ -1,5 +1,5 @@
 # 核心任务
-- name: LAMP
+- name: LNMP
   hosts: all
   become: yes
   become_method: sudo
