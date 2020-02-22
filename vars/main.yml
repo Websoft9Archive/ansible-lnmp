@@ -3,6 +3,7 @@ region: "1"
 
 #设置9panel显示
 
+w9panel_web: nginx
 w9panel_set_infrastructure: LNMP
 w9panel_set_apps: 
     - Example
