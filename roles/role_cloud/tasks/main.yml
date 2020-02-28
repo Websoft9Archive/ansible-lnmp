@@ -49,12 +49,12 @@
     apt:
       name: ec2-instance-connect
       update_cache: yes
-    when: ansible_distribution == 'Ubuntu'
+    when: ansible_os_family == 'Debian'
 
   - name: AWS Configure
     yum:
       name: ec2-instance-connect
-    when: ansible_distribution == 'Centos' or ansible_distribution == 'Amazon'
+    when: ansible_os_family == 'RedHat'
   
   - name: Start ec2-instance-connect
     service:

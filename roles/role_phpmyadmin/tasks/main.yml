@@ -1,104 +1,100 @@
 ---
-- block:
-  - name: Check HTTP Server type
-    shell: "curl -Is http://127.0.0.1 | grep 'Server' |awk -F ': ' '{print $2}'|tr 'A-Z' 'a-z'"
-    register: http_type
-    
-  - name: Check whether the local machine contains MySQL
-    shell: curl -Is 127.0.0.1:3306 > /dev/null;echo $?
-    register: check_mysqlserver
-  
-  - name: Create apps directory
-    file: 
-        path: /data/apps
-        state: directory
-        owner: "{{http_type.stdout}}"
-        group: "{{http_type.stdout}}"
-        mode: 0755
+#Create extra var for this playbook adapt mutilate OS and Web server
+- set_fact:
+    phpmyadmin_vhost_dir: "{{phpmyadmin_runtime_meta[ansible_os_family][phpmyadmin_webs].vhost_dir}}"
+    phpmyadmin_service: "{{phpmyadmin_runtime_meta[ansible_os_family][phpmyadmin_webs].service}}"
+    phpmyadmin_owner: "{{phpmyadmin_runtime_meta[ansible_os_family][phpmyadmin_webs].owner}}"
+    phpmyadmin_mysql_password: "{{mysql_root_password}}"
 
-  - name: Download phpMyAdmin
-    unarchive:
-      src: "{{phpmyadmin_download_url.old}}"
-      dest: /data/apps
-      remote_src: yes
+- debug:
+    msg: runtime {{ phpmyadmin_vhost_dir }}, {{phpmyadmin_service}}, {{phpmyadmin_owner}}, {{phpmyadmin_webs}}, {{ansible_distribution}}
+
+# phpMyAdmin pre-installation
+
+- name: Remove phpmyadmin if it exist
+  shell: |
+    rm -rf /data/apps/*phpmyadmin*
+    rm -rf /data/apps/*phpMyAdmin*
+
+- name: Create apps directory for phpMyAdmin download
+  file: 
+      path: /data/apps
+      state: directory
+      mode: 0750
+
+# phpMyAdmin installation
+
+- name: Check whether the local machine contains MySQL
+  shell: curl -Is 127.0.0.1:3306 > /dev/null;echo $?
+  register: check_mysqlserver
+
+- name: Download phpMyAdmin from {{phpmyadmin_download_url.old}}
+  unarchive:
+    src: "{{phpmyadmin_download_url.old}}"
+    dest: /data/apps
+    remote_src: yes
+  when: phpmyadmin_php_version <= "5.4"
+
+- name: Download phpMyAdmin from {{phpmyadmin_download_url.new}}
+  unarchive:
+    src: "{{phpmyadmin_download_url.new}}"
+    dest: /data/apps
+    remote_src: yes
+  when: phpmyadmin_php_version > "5.5"
+
+- name: phpMyadmin directory rename
+  shell: cd /data/apps; if [ ! -d "phpmyadmin" ]; then mv *phpMyAdmin* phpmyadmin; fi
+  ignore_errors: True
+
+- name: replace config.inc.php
+  copy: 
+    src: config.inc.php
+    dest: /data/apps/phpmyadmin/
+
+- block:
+  - name: Active phpMyAdmin 4.0.x Advanced Features
+    mysql_db:
+      config_file: /etc/my.cnf
+      login_user: root
+      login_password: "{{phpmyadmin_mysql_password}}"
+      name: phpmyadmin
+      state: import
+      target: /data/apps/phpmyadmin/examples/create_tables.sql
     when: phpmyadmin_php_version <= "5.4"
 
-  - name: Download phpMyAdmin
-    unarchive:
-      src: "{{phpmyadmin_download_url.new}}"
-      dest: /data/apps
-      remote_src: yes
-    when: phpmyadmin_php_version > "5.5"
-
-  - name: phpMyadmin directory rename
-    shell: mv /data/apps/phpMyAdmin-* /data/apps/phpmyadmin
-    ignore_errors: True
+  - name: Active phpMyAdmin 4.x Advanced Features
+    mysql_db:
+      config_file: /etc/my.cnf
+      login_user: root
+      login_password: "{{phpmyadmin_mysql_password}}"
+      name: phpmyadmin
+      state: import
+      target: /data/apps/phpmyadmin/sql/create_tables.sql
+    when: phpmyadmin_php_version >= "5.5"
+  when: check_mysqlserver.stdout == '0'
   
-  - name: phpMyadmin Configuration
-    copy: 
-      src: config.inc.php
-      dest: /data/apps/phpmyadmin/
-  
-  - block:
-    - name: Active phpMyAdmin 4.0.x Advanced Features
-      mysql_db:
-        config_file: /etc/my.cnf
-        login_user: root
-        login_password: "{{phpmyadmin_mysql_password}}"
-        name: phpmyadmin
-        state: import
-        target: /data/apps/phpmyadmin/examples/create_tables.sql
-      when: phpmyadmin_php_version <= "5.4"
-
-    - name: Active phpMyAdmin 4.x Advanced Features
-      mysql_db:
-        config_file: /etc/my.cnf
-        login_user: root
-        login_password: "{{phpmyadmin_mysql_password}}"
-        name: phpmyadmin
-        state: import
-        target: /data/apps/phpmyadmin/sql/create_tables.sql
-      when: phpmyadmin_php_version >= "5.5"
-    when: check_mysqlserver.stdout == '0'
+- name: allow login to any user entered server in cookie based authentication 
+  lineinfile:
+    dest: /data/apps/phpmyadmin/libraries/config.default.php
+    regexp: "$cfg['AllowArbitraryServer'] = false;"
+    line: "$cfg['AllowArbitraryServer'] = true;"
+    state: present
+  when: check_mysqlserver.stdout > '0'
 
 
-   
-  - name: allow login to any user entered server in cookie based authentication 
-    lineinfile:
-      dest: /data/apps/phpmyadmin/libraries/config.default.php
-      regexp: "$cfg['AllowArbitraryServer'] = false;"
-      line: "$cfg['AllowArbitraryServer'] = true;"
-      state: present
-    when: check_mysqlserver.stdout > '0'
+# System settings
 
-  - name: change phpMyadmin permission
-    file: 
-      path: /data/apps/phpmyadmin
-      group: "{{http_type.stdout}}"
-      owner: "{{http_type.stdout}}"
-      recurse: yes
-      state: directory
-  
-  - block: # phpMyAdmin Apache
-    - name: Copy phpMyAdmin Configuration for apache
-      copy: src=phpMyAdmin-apache.conf dest=/etc/httpd/conf.d/phpMyAdmin.conf
+- name: Permission directory
+  shell: |
+    find /data/apps -type d -exec chmod 750 {} \;
+    find /data/apps -not -type d -exec chmod 640 {} \;
+
+- block:
+  - name: change owner&group
+    shell: chown -R {{phpmyadmin_owner}}:{{phpmyadmin_owner}} /data/apps/phpmyadmin
+
+  - name: Copy Apache or Nginx vhost configuration
+    copy: src=phpMyAdmin-{{phpmyadmin_webs}}.conf dest={{phpmyadmin_vhost_dir}}/phpmyadmin.conf
     
-    - name: apache service restart
-      service: name=httpd state=restarted
-
-    when: http_type.stdout == 'apache'
-
-
-  - block: # phpMyAdmin Nginx
-    - name: Copy phpMyAdmin Configuration for nginx
-      copy: src=phpMyAdmin-nginx.conf dest=/etc/nginx/extra/phpmyadmin.conf
-      
-    - name: apache service restart
-      service: name=nginx state=restarted
-
-    when: http_type.stdout == 'nginx'
-
-  when: ansible_os_family == 'RedHat'
-
-- debug: msg="Not Support Ubuntu"
-  when: ansible_os_family == 'Debian'
+  - name: restart Apache or Nginx
+    service: name={{phpmyadmin_service}} state=restarted enabled=yes

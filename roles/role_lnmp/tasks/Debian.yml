@@ -3,12 +3,19 @@
     src: centos-apache-vhost.conf
     dest: /etc/apache2/sites-enabled/000-default.conf
 
-- name: Create default website Dir
+- name: Create /data/wwwroot/www.example.com
   file: 
     path: /data/wwwroot/www.example.com
     state: directory
-    owner: apache
-    group: apache
+    owner: nginx
+    group: nginx
+
+- name: Create /data/apps
+  file: 
+    path: /data/apps
+    state: directory
+    owner: nginx
+    group: nginx
 
 
 - name: Restart Apache

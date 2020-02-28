@@ -21,11 +21,11 @@ Role Variables
 下面列出了可用变量和默认值(请参见"defaults/main.yml"):
 
 ```
-# centos版本 5.5 5.6 5.7  Ubuntu支持5.7和8.0
-mysql_version: 5.6       
+# centos版本 5.5 5.6 5.7  Ubuntu18.04 支持5.7和8.0 Ubuntu16.04 支持5.6/5.7和8.0
+mysql_version: "5.6"       
 
 # MySQL root 密码
-mysql_root_password: 123456  
+mysql_root_password: "123456"
 
 # 新建数据库
 mysql_databases: []
@@ -61,8 +61,8 @@ Example Playbook
 
 `vars/main.yml` :
 ```
-mysql_version: 5.7
-mysql_root_password: 123456  
+mysql_version: "5.7"
+mysql_root_password: "123456" 
 
 mysql_databases: 
   - name: example 

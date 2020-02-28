@@ -2,6 +2,8 @@
 
 apache_ius_url: https://libs.websoft9.com/apps/apache/ius-release-el7.rpm
 
+w9panel_download_url: https://libs.websoft9.com/apps/9panel/9panel-latest.zip
+
 php_getcomposer_url: https://libs.websoft9.com/apps/composer/composer.phar
 redis_download_url: https://libs.websoft9.com/apps/redis
 

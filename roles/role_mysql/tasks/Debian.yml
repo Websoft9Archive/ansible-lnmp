@@ -35,15 +35,23 @@
     login_password: "{{mysql_root_password}}"
     name: ''
     host_all: yes
+    login_unix_socket: /var/run/mysqld/mysqld.sock
     state: absent
 
 - name: Remove hostname user accounts
-  mysql_user: login_user=root login_password={{mysql_root_password}} name='root' host={{ ansible_nodename }} state=absent
+  mysql_user: 
+    login_user: root 
+    login_password: "{{mysql_root_password}}" 
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: root
+    host: "{{ ansible_nodename }}" 
+    state: absent
 
 - name: Removes test Databases
   mysql_db:
     login_user: root
     login_password: "{{mysql_root_password}}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
     name: test
     state: absent
 

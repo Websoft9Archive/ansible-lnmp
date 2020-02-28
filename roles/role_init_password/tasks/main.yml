@@ -27,7 +27,7 @@
 
   - name: restart rc.local
     service: name=rc.local state=restarted enabled=yes
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_os_family == 'Debian'
 
 - name: Setting Startup
   lineinfile:
@@ -39,4 +39,4 @@
   file:
     path: /etc/rc.d/rc.local
     mode: 0750
-  when: ansible_distribution == 'CentOS'
+  when: ansible_os_family == 'RedHat'

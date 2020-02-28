@@ -24,23 +24,7 @@
     src: centos-nginx-default.conf
     dest: /etc/nginx/conf.d/default.conf
 
-- name: Create default website Dir
-  file: 
-    path: /data/wwwroot/www.example.com
-    state: directory
-    owner: nginx
-    group: nginx
-
-
 - name: Restart Nginx
   service:
     name: nginx
     state: restarted
-
-
-- name: Create default website Dir
-  file: 
-    path: /data/wwwroot/www.example.com
-    state: directory
-    owner: nginx
-    group: nginx
