@@ -16,6 +16,8 @@ w9panel_set_apps:
 mysql_root_password: "123456"
 phpmyadmin_webs: nginx
 phpmyadmin_mysql_password: "123456"
+
+jdk_version: "8" 
   
 # 初始化MySQL root密码
 init_db: 

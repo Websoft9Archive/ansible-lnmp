@@ -14,6 +14,12 @@
 - src: http://github.com/websoft9dev/role_php-fpm
   version: master
 
+- src: http://github.com/websoft9dev/role_jdk
+  version: master
+
+- src: http://github.com/websoft9dev/role_tomcat
+  version: master
+
 - src: http://github.com/websoft9dev/role_phpmyadmin
   version: master
 

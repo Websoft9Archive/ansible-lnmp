@@ -6,7 +6,7 @@
   vars_files:
     - vars/main.yml
   vars_prompt:
-    - name: 'php_choose'
+    - name: 'php_selection'
       prompt: "\nChoose serial number to install PHP \n\n
       1: PHP 5.6\n
       2: PHP 7.0\n
@@ -17,7 +17,7 @@
       private: no
       default: 4
 
-    - name: 'mysql_choose'
+    - name: 'mysql_selection'
       prompt: "\nChoose serial number to install MySQL \n\n
       1: MySQL 5.5(only for CentOS7.x, AmazonLinux)\n
       2: MySQL MySQL5.6(only for CentOS7.x, AmazonLinux, Ubuntu16.04 )\n
@@ -26,21 +26,34 @@
       private: no
       default: 3
 
+    - name: 'java_selection'
+      prompt: "\nDo you want to install Java and Tomcat with LNMP? \n\n
+      1: No, I don't want to install them\n
+      2: Yes)\n"
+      private: no
+      default: 2
+
   vars:
-    select_mysql_ver:
+    mysql_select:
       '1': "5.5"
       '2': "5.6"
       '3': "5.7"
       '4': "8.0"
-    select_php_ver:
+    php_select:
       '1': "5.6"
       '2': "7.0"
       '3': "7.1"
       '4': "7.2"
       '5': "7.3"
+    java_select:
+      '1': False
+      'n': False
+      '2': True
+      'y': True
 
-    mysql_version: "{{select_mysql_ver[mysql_choose]}}"
-    php_version: "{{select_php_ver[php_choose]}}"
+    mysql_version: "{{mysql_select[mysql_selection]}}"
+    php_version: "{{php_select[php_selection]}}"
+    java_install: "{{java_select[java_selection]}}"
     
   pre_tasks:
     - include_vars: roles/role_cloud/vars/cloud_download_url.yml
@@ -59,6 +72,8 @@
     - {role: role_runtime, tags: "role_runtime"}
     - {role: role_phpmyadmin, tags: "role_phpmyadmin"}
     - {role: role_9panel, tags: "role_9panel"}
+    - {role: role_jdk, tags: "role_jdk", when: java_install}
+    - {role: role_tomcat, tags: "role_tomcat", when: java_install}
     - {role: role_inotify_watch, tags: "inotify_watch"}
     - {role: role_init_password, tags: "init_password"}
     - {role: role_preend, tags: "role_preend"}
