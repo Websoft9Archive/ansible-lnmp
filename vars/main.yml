@@ -8,7 +8,6 @@ preend_certbot: True
 #设置9panel显示
 
 w9panel_webs: nginx
-w9panel_set_infrastructure: LNMP
 w9panel_set_apps: 
     - Example
 
