@@ -57,6 +57,18 @@ UTF-8
 
 我们在 Github 上报错了一份完整的 php.ini 文件模板，[下载](https://github.com/Websoft9/ansible-lamp/blob/master/roles/php/templates/php.ini) 后覆盖你服务器上的 */ect/php.ini*
 
+#### Enabling Gzip Compression for HTML, CSS, and JavaScript Files
+
+By default, compression is disabled in NGINX but depending on your installation or Linux distribution, some settings might be enabled in the default nginx.conf file. Here we enable gzip compression in the NGINX configuration file:
+
+```
+gzip on;
+gzip_types application/xml application/json text/css text/javascript application/javascript;
+gzip_vary on;
+gzip_comp_level 6;
+gzip_min_length 500;
+```
+
 #### 如何修改上传的文件权限?
 
 ```shell
