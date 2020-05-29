@@ -79,3 +79,7 @@ memory_limit – Minimum: 256M
 ## PHP安装扩展
 
 请参考 [《PHP扩展管理专题》](https://support.websoft9.com/docs/linux/zh/lang-php.html#扩展)
+
+## 可视化Nginx配置工具
+
+参考：https://www.digitalocean.com/community/tools/nginx
