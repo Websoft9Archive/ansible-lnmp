@@ -18,8 +18,8 @@ phpmyadmin_mysql_password: "123456"
 
 jdk_version: "8" 
   
-# 初始化MySQL root密码
+# init all users password for MySQL
 init_db: 
-    mysql:
-      user: root
-      password: "123456" 
+  mysql:
+    admin: root
+    password: "123456"
