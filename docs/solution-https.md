@@ -18,6 +18,7 @@ If you have applied for a commercial certificate, complete the HTTPS configurati
    listen 443 ssl; 
    ssl_certificate /data/cert/xxx.crt;
    ssl_certificate_key /data/cert/xxx.key;
+   ssl_trusted_certificate /data/cert/chain.pem;
    ssl_session_timeout 5m;
    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
