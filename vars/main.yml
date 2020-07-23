@@ -3,8 +3,6 @@ region: "0"
 
 runtime_name: lnmp
 
-preend_certbot: True
-
 #设置9panel显示
 
 w9panel_webs: nginx
