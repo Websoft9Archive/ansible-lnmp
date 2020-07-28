@@ -3,7 +3,7 @@ region: "0"
 
 runtime_name: lnmp
 
-apache_certbot: True
+nginx_certbot: True
 
 common_os_support: ["CentOS", "Amazon"]
 
