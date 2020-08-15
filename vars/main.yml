@@ -1,19 +1,19 @@
-#全局
 region: "0"
-
-runtime_name: lnmp
-
-nginx_certbot: True
 
 common_os_support: ["CentOS", "Amazon"]
 
+runtime_name: lnmp
+nginx_certbot: True
+
 w9panel_webs: nginx
 w9panel_set_apps: 
-    - Example
+  - Example
 
+mysql_remote: True
 mysql_root_password: "123456"
-phpmyadmin_webs: nginx
-phpmyadmin_mysql_password: "123456"
+
+docker_applications: 
+  - phpmyadmin
 
 jdk_version: "8" 
   
