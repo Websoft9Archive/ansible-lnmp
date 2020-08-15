@@ -1,4 +1,3 @@
-# 核心任务
 - name: LNMP
   hosts: all
   become: yes
@@ -45,6 +44,7 @@
       '3': "7.1"
       '4': "7.2"
       '5': "7.3"
+      '5': "7.4"
     java_select:
       '1': False
       'n': False
@@ -74,9 +74,9 @@
     - {role: role_nginx, tags: "role_nginx"}
     - {role: role_redis, tags: "role_redis"}
     - {role: role_mysql, tags: "role_mysql"}
-    - {role: role_php-fpm, tags: "role_php-fpm"}
+    - {role: role_php, tags: "role_php"}
     - {role: role_runtime, tags: "role_runtime"}
-    - {role: role_phpmyadmin, tags: "role_phpmyadmin"}
+    - {role: role_docker, tags: "role_docker"}
     - {role: role_9panel, tags: "role_9panel"}
     - {role: role_jdk, tags: "role_jdk", when: java_install}
     - {role: role_tomcat, tags: "role_tomcat", when: java_install}
