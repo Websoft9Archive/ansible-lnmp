@@ -1,6 +1,6 @@
 region: "0"
 
-common_os_support: ["CentOS", "Amazon"]
+common_os_support: ["CentOS", "Ubuntu", "Amazon"]
 
 runtime_name: lnmp
 nginx_certbot: True
