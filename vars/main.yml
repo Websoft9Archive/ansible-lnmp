@@ -2,7 +2,6 @@ region: "0"
 
 common_os_support: ["CentOS", "Ubuntu", "Amazon"]
 
-runtime_name: lnmp
 nginx_certbot: True
 
 w9panel_webs: nginx
