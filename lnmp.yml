@@ -80,6 +80,6 @@
     - {role: role_jdk, tags: "role_jdk", when: java_install}
     - {role: role_tomcat, tags: "role_tomcat", when: java_install}
     - {role: role_inotify_watch, tags: "role_inotify_watch"}
-    - {role: role_init_password, tags: "role_init_password"}
+    - {role: role_initpassword, tags: "role_initpassword"}
     - {role: role_preend, tags: "role_preend"}
     - {role: role_end, tags: "role_end"} 
