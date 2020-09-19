@@ -3,6 +3,8 @@ region: "0"
 common_os_support: ["CentOS", "Ubuntu", "Amazon"]
 
 nginx_certbot: True
+nginx_appname: "example"
+nginx_vhost_mode: "www"
 
 w9panel_webs: nginx
 w9panel_set_apps: 
