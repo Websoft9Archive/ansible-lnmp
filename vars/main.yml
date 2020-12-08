@@ -7,6 +7,7 @@ nginx_appname: "example"
 nginx_vhost_mode: "www"
 
 w9panel_webs: nginx
+w9panel_set_infrastructure: LNMP
 w9panel_set_apps: 
   - Example
 
