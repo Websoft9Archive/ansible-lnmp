@@ -13,10 +13,10 @@ sudo systemctl status nginx
 
 ### PHP-FPM
 ```shell
-systemctl start php-fpm
-systemctl stop php-fpm
-systemctl restart php-fpm
-systemctl status php-fpm
+sudo systemctl start php-fpm
+sudo systemctl stop php-fpm
+sudo systemctl restart php-fpm
+sudo systemctl status php-fpm
 ```
 
 ### MySQL
@@ -31,16 +31,34 @@ sudo systemctl status mysql
 ### Redis
 
 ```shell
-systemctl start redis
-systemctl stop redis
-systemctl restart redis
-systemctl status redis
+sudo systemctl start redis
+sudo systemctl stop redis
+sudo systemctl restart redis
+sudo systemctl status redis
 ```
 
 ### Tomcat
 ```shell
 sudo systemctl start tomcat
-sudo ssystemctl stop tomcat
-sudo ssystemctl restart tomcat
-sudo ssystemctl status nginx
+sudo systemctl stop tomcat
+sudo systemctl restart tomcat
+sudo systemctl status nginx
+```
+
+### phpMyAdmin
+
+```shell
+sudo docker start phpmyadmin
+sudo docker stop phpmyadmin
+sudo docker restart phpmyadmin
+sudo docker stats pgadmin
+```
+
+### Docker
+
+```shell
+sudo systemctl start docker
+sudo systemctl restart docker
+sudo systemctl stop docker
+sudo systemctl status docker
 ```

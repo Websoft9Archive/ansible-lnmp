@@ -4,13 +4,13 @@ If you have completed the LEMP deployment on Cloud Platform, the following steps
 
 ## Preparation
 
-1. Get the **Internet IP** on your Cloud Platform
+1. Get the **Server's Internet IP** on your Cloud Platform
 2. Check you **[Inbound of Security Group Rule](https://support.websoft9.com/docs/faq/tech-instance.html)** of Cloud Console to ensure the TCP:80 is allowed
 3. Make a domain resolution on your DNS Console if you want to use domain for LEMP
 
 ## Usability test
 
-1. Using local Chrome or Firefox to visit the URL *http://Internet IP/9panel* to enter the boot page
+1. Using local browser to visit the URL *http://Server's Internet IP/9panel* to enter the boot page
    ![9panel](https://libs.websoft9.com/Websoft9/DocsPicture/en/9panel/9panelmain-websoft9.png)
 
 2. You can get the basics of image, manage the database, access docs, and helpdesk from 9Panel

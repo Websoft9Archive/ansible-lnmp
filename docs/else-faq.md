@@ -1,12 +1,15 @@
 # FAQ
 
 #### What's different between LEMP and LEMP?
+
 LEMP is LEMP, just different names used by different people
 
 #### What is the default character set?
+
 UTF-8
 
 #### What is the Nginx vhost configuration file?
+
 The Nginx vhost configuration file is the function for Nginx to manage multiple applications. It's path is: */etc/nginx/conf.d/default.conf*.
 There have `server{ }` , each segment is corresponding to a application
 
@@ -19,11 +22,12 @@ Example application's path is: */data/wwwroot/www.example.com*, you can modify i
 Yes, add new application, you should add new VirtualHost segment in the file [Nginx vhost configuration file](/stack-components.md#nginx) for it
 
 #### Can I use this LEMP if I don't understand the Linux command?
+
 Yes, you can use GUI tool WinSCP to start LAMP, no commands
 
 #### If there is no domain name, can I deploy LEMP?
 
-Yes, visit LEMP by *http://Internet IP*
+Yes, visit LEMP by *http://Server's Internet IP*
 
 #### What is the password for the database root user?
 
@@ -31,11 +35,13 @@ The password is stored in the server related file: `/credentials/password.txt`
 
 #### Is there a web-base GUI database management tools?
 
-Yes, phpMyAdmin is on it, visit by *http://Internet IP/phpmyadmin*
+Yes, phpMyAdmin is on it, visit by *http://Server's Internet IP:9090*
 
 #### How to disable phpMyAdmin access?
 
-Edit the  [phpMyAdmin configuration file](/stack-components.md#phpmyadmin), replace `Require all granted` with `Require ip 192.160.1.0`, then restart Nginx service
+```
+sudo docker stop phpmyadmin
+```
 
 #### Is it possible to modify the code source path?
 
@@ -50,6 +56,7 @@ Please delete all files in 9Panel */data/apps/9panel* and keep an empty 9Panel f
 No, you don't need to change them because LEMP Image have change it automaticly
 
 #### How can I reset my php.ini to return to the initial?
+
 Download the [php.ini](https://github.com/Websoft9/ansible-lamp/blob/master/roles/php/templates/php.ini) from Websoft9 LEMP project on Github, upload to Server and cover /ect/php.ini
 
 #### Do I need to change the owner(group) for the files which I upload by SFTP?

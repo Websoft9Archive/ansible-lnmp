@@ -1,18 +1,14 @@
 # 故障处理
 
-故障处理主要通过日志文件进行分析，从某种程度上，处理故障就是解读日志文件。
+故障处理主要通过日志进行分析，处理故障基本等同于解读日志文件。
 
-我们收集使用 LNMP 过程中最常见的故障，供您参考： 
-
-## 网站类
+> 一部分故障与云平台密切相关，如果你可以确认故障的原因是云平台造成的，请参考[云平台文档](https://support.websoft9.com/docs/faq/zh/tech-instance.html)
 
 #### 网站显示重定向错误？
 
 打开Nginx虚拟主机配置文件，检查网站对应的 *server{}* 配置段内容，分析其中的重定向规则，找到其中的死循环。
 
-## 数据库类
-
-#### 数据库服务无法启动
+#### 数据库服务无法启动？
 
 数据库服务无法启动最常见的问题包括：磁盘空间不足，内存不足，配置文件错误。  
 建议先通过命令进行排查  
@@ -23,6 +19,10 @@ df -lh
 
 # 查看内存使用
 free -lh
+
+# 查看 MySQL 状态
+sudo systemctl status mysql
+sudo journalctl -u mysql
 ```
 
 #### 数据库日志文件太大，导致磁盘空间不足？
@@ -53,9 +53,6 @@ chown -R root:nginx /var/lib/php/session
 echo 'chown nginx. -R /var/lib/php' >> /etc/cron.daily/0yum-daily.cron
 ~~~
 
-
-## Nginx类
-
 #### 重启 Nginx 服务显示 *No spaces...*
 
 出现此信息的时候，重启服务是成功的。
@@ -83,7 +80,3 @@ Nginx应用服务器出现502错误的原因很多，但是基本都是资源不
     ...
    ```
 4. 保存并[重启 Nginx 服务](/zh/admin-services.md#nginx)
-
-## 服务器类
-
-服务器以及网络相关故障的诊断和解决，与云平台密切相关，请参考[云平台文档](https://support.websoft9.com/docs/faq/zh/tech-instance.html)

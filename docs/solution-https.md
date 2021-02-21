@@ -4,9 +4,17 @@ LNMP deployment package has installed the SSL module of Nginx and open Certifica
 
 > In addition to the vhost configuration file, HTTPS settings do not need to modify any files in Nginx
 
-## Simple Steps
+## Quick start
 
-If you want to use a free certificate, just run the one command `certbot` on your instance to start the HTTPS deployment.
+### Automatic deployment
+
+If you want to use a free certificate, just run the one command `sudo certbot` on your instance to start the HTTPS deployment.
+
+```
+sudo certbot
+```
+
+### Manual deployment
 
 If you have applied for a commercial certificate, complete the HTTPS configuration in just three steps:
 

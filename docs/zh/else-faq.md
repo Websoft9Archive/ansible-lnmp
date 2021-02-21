@@ -35,11 +35,13 @@ UTF-8
 
 #### 是否有可视化的数据库管理工具？
 
-有，内置phpMyAdmin，访问地址：*http://服务器公网IP/phpmyadmin*
+有，内置phpMyAdmin，访问地址：*http://服务器公网IP:9090*
 
 #### 如何禁止外界访问phpMyAdmin？
 
-连接服务器，编辑 [phpMyAdmin 配置文件](/zh/stack-components.md#phpmyadmin)，将其中的 `Require all granted` 更改为 `Require ip 192.160.1.0`，然后重启 Nginx 服务
+```
+sudo docker stop phpmyadmin
+```
 
 #### 网站源码路径如何修改？
 
@@ -55,7 +57,7 @@ UTF-8
 
 #### 如何重置 php.ini 文件？
 
-我们在 Github 上报错了一份完整的 php.ini 文件模板，[下载](https://github.com/Websoft9/ansible-lamp/blob/master/roles/php/templates/php.ini) 后覆盖你服务器上的 */ect/php.ini*
+[下载 php.ini 模板](https://github.com/Websoft9/ansible-lamp/blob/master/roles/php/templates/php.ini) 后覆盖你服务器上的 */ect/php.ini*
 
 #### Enabling Gzip Compression for HTML, CSS, and JavaScript Files
 
