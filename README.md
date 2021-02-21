@@ -8,7 +8,7 @@
 
 **LNMP Cloud Installer**, developed by [Websoft9](https://www.websoft9.com), is an automatic installation program of **LNMP (Linux-Nginx-MySQL-PHP)** based on Ansible and shell. It helps user install LNMP and pre-configure required items automatically and users only need to run a command on Linux. It simplifies the complicated installation and initialization process.  
 
-![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/wamp/php-infra-websoft9.png)
+![](https://libs.websoft9.com/Websoft9/DocsPicture/en/lamp/lamp-imagestacks-websoft9.png)
 
 ## System Requirement
 
