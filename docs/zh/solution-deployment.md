@@ -91,7 +91,8 @@
       ```
       ![](https://libs.websoft9.com/Websoft9/DocsPicture/en/lnmp/lnmp-insertalias-websoft9.png)
 
-      注意：Alias 模板只能插入到 server{} 配置段中
+      > 注意：Alias 模板只能插入到 server{} 配置段中
+      > 如出现502错误，可以查找 fastcgi_pass  unix:/dev/shm/php-fpm-default.sock 配置中 sock 文件是否跟系统的 sock 文件一致，如不一致替换之
 
 4. 保存 *default.conf*，然后在 WinSCP 中运行重启服务命令 或 云控制台重启服务器 ：
       ~~~
