@@ -2,7 +2,7 @@
 
 **Deployment is to copy the LEMP pre-packaged online to your Cloud Server**. For example, after the user subscribe LEMP on the Cloud Platform, the Platform will automatically copy the LEMP to the corresponding Cloud Server.
 
-- If LEMP has been deployed, go to [Initial Installation](/lnmp/stack-installation.md) to complete the operation.
+- If LEMP has been deployed, go to [Initial Installation](https://support.websoft9.com/docs/lnmp/stack-installation.html) to complete the operation.
 - If LEMP is not deployed, you need to deploy LEMP to your cloud server first.
 
 We offer two deployment LEMP scenarios (the deployment results are the same):
